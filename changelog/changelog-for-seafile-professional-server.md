@@ -1,8 +1,120 @@
 # Seafile Professional Server Changelog
 
+## 6.2
+
+From 6.2, It is recommended to use WSGI mode for communication between Seahub and Nginx/Apache. Two steps are needed if you'd like to switch to WSGI mode:
+
+1. Change the config file of Nginx/Apache.
+2. Restart Seahub with `./seahub.sh start` instead of `./seahub.sh start-fastcgi`
+
+The configuration of Nginx is as following:
+
+```
+location / {
+         proxy_pass         http://127.0.0.1:8000;
+         proxy_set_header   Host $host;
+         proxy_set_header   X-Real-IP $remote_addr;
+         proxy_set_header   X-Forwarded-For $proxy_add_x_forwarded_for;
+         proxy_set_header   X-Forwarded-Host $server_name;
+         proxy_read_timeout  1200s;
+
+         # used for view/edit office file via Office Online Server
+         client_max_body_size 0;
+
+         access_log      /var/log/nginx/seahub.access.log;
+         error_log       /var/log/nginx/seahub.error.log;
+    }
+```
+
+The configuration of Apache is as following:
+
+```
+    # seahub
+    SetEnvIf Authorization "(.*)" HTTP_AUTHORIZATION=$1
+    ProxyPass / http://127.0.0.1:8000/
+    ProxyPassReverse / http://127.0.0.1:8000/
+```
+
+### 6.2.0 beta (2017.10.16)
+
+
+* Add report charts for daily active users, daily file operations, and usage space
+* Add "admin" permision when sharing a library to another user/group
+* Redesign login page, adding a background image.
+* Clean the list of languages
+* Add the ability of tagging a snapshot of a library (Use `ENABLE_REPO_SNAPSHOT_LABEL = True` to turn the feature on)
+* [Admin] Add an option to enable users to share a library to any groups in the system.
+* Use WSGI as the default mode for deploying Seahub.
+* Add a field Reference ID to support changing users primary ID in Shibboleth or LDAP
+* Improved performance of loading library list
+* Use multi-threads in search indexing
+* [fix] Fix a bug when indexing a PDF larger than 10MB
+* Support adding a custom user search function
+ (https://github.com/haiwen/seafile-docs/commit/115f5d85cdab7dc272da81bcc8e8c9b91d85506e)
+* Other small UI improvements
+* [fix] Fix ADFS support
+
+
 ## 6.1
 
 You can follow the document on minor upgrade (http://manual.seafile.com/deploy/upgrade.html).
+
+### 6.1.9 （2017.09.28）
+
+* [fix] Fix some bugs in realtime backup server
+* Add option to set up Seafile HTTP server thread number
+* [fix] Fix create new file API when create a file with a same name with exist file
+* [fix] Fix a bug in permission check in file syncing
+* Add more detailed log information when permission check error
+* [fix] Add log to the size of queue of library size calculation
+* [fix] Use customized logo when sending email notifications
+
+
+### 6.1.8 (2017.08.18)
+
+* [fix] Fix license checking
+
+### 6.1.7 (2017.08.17)
+
+* [fix] Fix a bug when concurrent uploading/creating files (in the old version, when a user uploading/deleting multiple files in cloud file browser, it had a high chance to get “internal server error” message)
+* [fix] Fix thumbnails for some images that 90 degrees rotated
+* [fix] Fix support for resumable file upload
+* [fix] Fix MySQL connection pool in Ccnet
+* [fix] Use original GIF file when view GIF files
+* [fix, API] Check if name is valid when creating folder/file
+* Remove deleted libraries in search index
+* Use 30MB as the default value of THUMBNAIL_IMAGE_SIZE_LIMIT
+* [API] Improve performance when move or copy multiple files/folders
+* [admin] Support syncing user role from AD/LDAP attribute (https://manual.seafile.com/deploy_pro/ldap_role_sync.html)
+* [admin] Support deleting all outdated invitations at once
+* [admin] Improve access log
+* [admin] Support upload seafile-license.txt via web interface (only for single machine deployment)
+* [admin] Admin can cancel two-factor authentication of a user
+* [admin, role] Show user’s role in LDAP(Imported) table
+* [admin, role] Add wildcard support in role mapping for Shibboleth login
+* [admin] Improve performance in getting total file number, used space and total number of devices
+* [admin] Admin can add users to an institution via Web UI
+* [admin] Admin can choose a user’s role when creating a user
+
+### 6.1.4 (2017.07.11)
+
+* [API] Improve performance of getting unread notifications.
+* Delete deleted libraries in search index
+* Use user's languange as lang setting for OnlyOffice
+
+### 6.1.3 (2017.07.06)
+
+* Add context menu "details" to libraries and folders, so you can get how many files in a library or a folder.
+* Improve search result accuracy
+* [fix] Fix a bug in zip downloading an empty folder
+* Improve performance of multiple file copy and move
+* Admin can delete out-dated guest invitations
+* [fix] Fix a bug in seafile-gc "dry run" option
+* Users can restore deleted libraries by their own
+* Change default block size for files uploaded via web browser to 8MB.
+
+
+### 6.1.2 (deprecated)
 
 ### 6.1.1 (2017.06.19)
 

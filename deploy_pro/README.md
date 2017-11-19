@@ -10,6 +10,7 @@ Install Seafile Pro Edition
 
 - [Configure LDAP in Seafile Pro](using_ldap_pro.md)
 - [Syncing Groups from LDAP/AD](ldap_group_sync.md)
+- [Syncing Roles from LDAP/AD](ldap_role_sync.md)
 
 ## Migration and Upgrading
 
@@ -23,6 +24,7 @@ Install Seafile Pro Edition
 - [Setup Seafile Professional Server With Ceph](setup_with_Ceph.md)
 - [Migrate from File System to Ceph](migrate_to_ceph.md)
 - [Storage Backend Encryption](seaf_encrypt.md)
+- [Data migration between different backends](migrate.md)
 
 ## Config Options
 
@@ -35,8 +37,7 @@ Install Seafile Pro Edition
 ## Online File Preview and Editing
 
 - [Enable Office/PDF Documents Online Preview](office_documents_preview.md)
-- [Integrating with Office Web App](office_web_app.md)
-- [Integrating with LibreOffice Online](libreoffice_online.md)
+- [Integrating with Office Online Server](office_web_app.md)
 
 ## Virus Scan
 
@@ -50,9 +51,8 @@ Install Seafile Pro Edition
 ## Cluster
 
 - [Deploy seafile servers in a cluster](deploy_in_a_cluster.md)
-- [Setup with MariaDB and Ceph](clustering_with_mariadb_ceph.md)
-- [Setup Seafile cluster with NFS](setup_seafile_cluster_with_nfs.md)
 - [Enable search and background tasks in a cluster](enable_search_and_background_tasks_in_a_cluster.md)
+- [Setup Seafile cluster with NFS](setup_seafile_cluster_with_nfs.md)
 - [Upgrade a cluster](upgrade_a_cluster.md)
 
 ## Advanced User Management
@@ -71,11 +71,6 @@ Install Seafile Pro Edition
 ## Admin Tools
 
 - [Import Directory to Seafile](seaf_import.md)
-
-## FAQ
-
-- [FAQ For Seafile Professional Server](FAQ_for_seafile_pro_server.md)
-
 
 ## License
 

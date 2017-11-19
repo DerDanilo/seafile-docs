@@ -1,37 +1,11 @@
 # Mac OS X
 
-## Option 1: Homebrew (conflicting with macports)
+### Install QT 5.6.2:
 
-###Setup homebrew environment
+* Download it from https://download.qt.io/archive/qt/5.6/5.6.2/qt-opensource-mac-x64-clang-5.6.2.dmg
+* Double click the downloaded dmg file to start the installer, and install it to its default location.
 
-1. Install xcode
-
-  - Download Xcode from [website](https://developer.apple.com/xcode/downloads/) or
-    [App Store](http://itunes.apple.com/us/app/xcode/id497799835?ls=1&mt=12)
-  - Xcode Command Line Utilities might be enough to build seafile, but it is left untested yet.
-
-2. Install homebrew
-
-  - Execute this from Terminal
-  ``ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"`
-  - Make sure you have a clean homebrew environment. You can double-check it
-    by ``brew doctor``
-
-> visit http://brew.sh/ for more
-
-Then install seafile from homebrew
-  ```
-  brew tap Chilledheart/seafile
-  brew install seafile-client
-  ```
-
-If you face any installation issue, please report it with your homebrew logs
-- [Homebrew Troubleshooting](https://github.com/Homebrew/homebrew/wiki/Troubleshooting)
-
-If it is an issue while using homebrewed seafile, please report it with your seafile logs
-- [Seafile FAQ](../faq.md)
-
-## Option 2: Macports (conflicting with homebrew)
+## Install Macports
 
 ###Setup macports environment
 
@@ -48,7 +22,7 @@ If it is an issue while using homebrewed seafile, please report it with your sea
 3. Install following libraries and tools using `port`
 
         sudo port install autoconf automake pkgconfig libtool glib2 \
-        libevent vala openssl git qt4-mac jansson
+        libevent vala openssl git jansson cmake
 
 4. Install python
 
@@ -66,6 +40,9 @@ If it is an issue while using homebrewed seafile, please report it with your sea
         export CPPFLAGS="-I/opt/local/include"
         export LDFLAGS="-L/opt/local/lib -L/usr/local/lib -Wl,-headerpad_max_install_names"
 
+        QT_BASE=$HOME/Qt5.6.2/5.6/clang_64
+        export PATH=$QT_BASE/bin:$PATH
+        export PKG_CONFIG_PATH=$QT_BASE/lib/pkgconfig:$PKG_CONFIG_PATH
 
 Compiling libsearpc
 ------------------

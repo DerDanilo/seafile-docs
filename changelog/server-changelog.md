@@ -1,5 +1,85 @@
 # Seafile Server Changelog
 
+## 6.2
+
+From 6.2, It is recommended to use WSGI mode for communication between Seahub and Nginx/Apache. Two steps are needed if you'd like to switch to WSGI mode:
+
+1. Change the config file of Nginx/Apache.
+2. Restart Seahub with `./seahub.sh start` instead of `./seahub.sh start-fastcgi`
+
+The configuration of Nginx is as following:
+
+```
+location / {
+         proxy_pass         http://127.0.0.1:8000;
+         proxy_set_header   Host $host;
+         proxy_set_header   X-Real-IP $remote_addr;
+         proxy_set_header   X-Forwarded-For $proxy_add_x_forwarded_for;
+         proxy_set_header   X-Forwarded-Host $server_name;
+         proxy_read_timeout  1200s;
+
+         # used for view/edit office file via Office Online Server
+         client_max_body_size 0;
+
+         access_log      /var/log/nginx/seahub.access.log;
+         error_log       /var/log/nginx/seahub.error.log;
+    }
+```
+
+The configuration of Apache is as following:
+
+```
+    # seahub
+    SetEnvIf Authorization "(.*)" HTTP_AUTHORIZATION=$1
+    ProxyPass / http://127.0.0.1:8000/
+    ProxyPassReverse / http://127.0.0.1:8000/
+```
+
+### 6.2.3 (2017/11/15)
+
+* Support OAuth.
+* WSGI uses 5 processors by default instead of 3 processors each with 5 threads
+* [share] Add "click to select" feature for download/upload links.
+* [Admin] Show/edit contact email in admin panel.
+* [Admin] Show upload links in admin panel.
+* [fix] Fix Shibboleth login redirection issue, see https://forum.seafile.com/t/shared-links-via-shibboleth/4067/19
+* [fix] In some case failed to unshare a folder.
+* [fix] LDAP search issue.
+* [fix] Fix Safari downloaded file names are encoded like 'test-%2F%4B.doc' if it contains special characters.
+* [fix] Disable client encrypt library creation when creating encrypt library is disabled on server.
+
+### 6.2.2 (2017/09/25)
+
+* [fix] Fix register button can't be clicked in login page
+* [fix] Fix login_success field not exist in sysadmin_extra_userloginlog
+
+
+### 6.2.1 (2017/09/22)
+
+* [fix] Fix upgrade script for SQLite database
+* Add Czech language
+* [UI] Move password setting to a separate section
+* [UI] Add divider to file operation menu
+* [UI] Use high DPI icon in favorites page
+* [UI] Focus on password fields by default
+* [UI] Show feedback message when restore a library to a snapshot
+* [fix] Don't import settings in seafile.conf to database
+
+
+### 6.2.0 beta (2017/09/14)
+
+* Redesign login page, adding a background image.
+* Add two factor authentication
+* Clean the list of languages
+* Add the ability of tagging a snapshot of a library (Use `ENABLE_REPO_SNAPSHOT_LABEL = True` to turn the feature on)
+* [Admin] Add an option to enable users to share a library to any groups in the system.
+* Use WSGI as the default mode for deploying Seahub.
+* Add a field Reference ID to support changing users primary ID in Shibboleth or LDAP
+* Improved performance of loading library list
+* Support adding a custom user search function (https://github.com/haiwen/seafile-docs/commit/115f5d85cdab7dc272da81bcc8e8c9b91d85506e)
+* Other small UI improvements
+
+
 ## 6.1
 
 If you upgrade from 6.0 and you'd like to use the feature video thumbnail, you need to install ffmpeg package:
@@ -15,6 +95,19 @@ rpm --import http://li.nux.ro/download/nux/RPM-GPG-KEY-nux.ro
 yum -y install ffmpeg ffmpeg-devel
 pip install pillow moviepy
 ```
+
+### 6.1.2 (2017.08.15)
+
+* Use user's language as lang setting for OnlyOffice
+* Improve performance for getting user’s unread messages
+* Fix error when uploading files to system default library template
+* Users can restore their own deleted libraries
+* Improve performance when move or copy multiple files/folders
+* Add “details” for libraries, folders and files to show information like how many files in a library/folder
+* [fix] Fix a bug in seaf-gc
+* [fix, API] Fix a bug in creating folder API
+* [admin] Improve performance in getting total file number, used space and total number of devices
+* [fix] Fix MySQL connection pool in Ccnet
 
 ### 6.1.1 (2017.06.15)
 
@@ -38,7 +131,7 @@ Web UI Improvement:
 6. Add OnlyOffice integration
 7. Add Collabora integration
 8. Support folder upload in community edition
-9. Show which client modify a file in history, this will help to find which client accidentally modified a file or deleted a file. 
+9. Show which client modify a file in history, this will help to find which client accidentally modified a file or deleted a file.
 
 Improvement for admins:
 
@@ -346,7 +439,7 @@ Sharing link
 * [security] Fix password check for visiting a file in password protected sharing link.
 * Show file last modified time
 * [fix] Fix image thumbnail in grid view
-* [UI] Improve UI of grid view mode 
+* [UI] Improve UI of grid view mode
 
 
 ### 5.0.2 (2015.12.04)
@@ -358,7 +451,7 @@ Sharing link
 * [fix] Fix the performance problem in showing thumbnails in folder sharing link page
 * [fix] Clear cache when set user name via API
 * [fix, admin] Fix searching libraries by name when some libraries are broken
- 
+
 
 ### 5.0.1 beta (2015.11.12)
 
@@ -384,7 +477,7 @@ UI changes:
 Config changes:
 
 * Move all config files to folder `conf`
-* Add web UI to config the server. The config items are saved in database table (seahub-dab/constance_config). They have a higher priority over the items in config files. 
+* Add web UI to config the server. The config items are saved in database table (seahub-dab/constance_config). They have a higher priority over the items in config files.
 
 Trash:
 
@@ -431,7 +524,7 @@ Security:
 * [fix] Check the validity of system default library template, if it is broken, recreate a new one.
 * [fix] After transfer a library, remove original sharing information
 * [security] Fix possibility to bypass Captcha check
-* [security] More security fixes. 
+* [security] More security fixes.
 
 
 ### 4.4.2 (2015.10.12)
@@ -497,7 +590,7 @@ Usability Improvement
 
 * [UI] Improve ui for file view page
 * [UI] Improve ui for sorting files and libraries
-* Redesign sharing dialog 
+* Redesign sharing dialog
 * Enable generating random password for sharing link
 * Remove private message module
 * Remove direct *single* file sharing between users (You can still sharing folders)
@@ -509,7 +602,7 @@ Others
 * [fix] Fix a bug that client can't detect a library has been deleted in the server
 * [security] Improve permission check in image thumbnail
 * [security] Regenerate Seahub secret key, the old secret key lack enough randomness
-* Remove the support of ".seaf" format 
+* Remove the support of ".seaf" format
 * [API] Add API for generating sharing link with password and expiration
 * [API] Add API for generating uploading link
 * [API] Add API for link files in sharing link
@@ -553,7 +646,7 @@ STATIC_URL = MEDIA_URL + '/assets/'
 * Don't show generating sharing link for encrypted libraries
 * Don't show the list of sub-libraries if user do not enable sub-library
 * Enable adding existing libraries to organization
-* Add loading tip in picture preview page 
+* Add loading tip in picture preview page
 
 ### 4.2.0 beta (2015.05.13)
 
@@ -599,7 +692,7 @@ Platform
 ### 4.1.0 beta (2015.03.18)
 
 * Shibboleth authentication support.
-* Redesign fsck. 
+* Redesign fsck.
 * Add image thumbnail in folder sharing link
 * Add API to support logout/login an account in the desktop client
 * Add API to generate thumbnails for images files
@@ -661,7 +754,7 @@ Small improvements
 * [fix] Fix listing files of a large folder
 * [fix] Fix folder sharing link with password protection
 * [fix] Fix deleting broken libraries in the system admin panel
- 
+
 ### 4.0.1 (2014.11.29)
 
 * [fix] Fix bugs in syncing with HTTP protocol
@@ -731,7 +824,7 @@ Small improvements
 Syncing
 
 * Improve performance: easily syncing 10k+ files in a library.
-* Don't need to download files if they are moved to another directory. 
+* Don't need to download files if they are moved to another directory.
 
 Platform
 
@@ -1014,7 +1107,7 @@ Web
 * [wiki] Add frame and max-width to images
 * Use 127.0.0.1 to read files (markdown, txt, pdf) in file preview
 * [bugfix] Fix pagination in library snapshot page
-* Set the max length of message reply from 128 characters to 2000 characters. 
+* Set the max length of message reply from 128 characters to 2000 characters.
 * Improved performance for home page and group page
 * [Admin] Add administration of public links
 
@@ -1036,7 +1129,7 @@ Platform
 
 ### 1.7.0.2 for Linux 32 bit
 
-* [bugfix] Fix "Page Unavailable" when view doc/docx/ppt. 
+* [bugfix] Fix "Page Unavailable" when view doc/docx/ppt.
 
 ### 1.7.0.1 for Linux 32 bit
 
@@ -1107,7 +1200,7 @@ API
 
 ### 1.5.2
 
-* [daemon] Fix problem in DNS lookup for LDAP server 
+* [daemon] Fix problem in DNS lookup for LDAP server
 
 ### 1.5.1
 
@@ -1123,7 +1216,7 @@ Seafile Web
 * Public Info & Public Library page are combined into one
 * Support selection of file encoding when viewing online
 * Improved online picture view (Switch to prev/next picture with keyboard)
-* Fixed a bug when doing diff for a newly created file. 
+* Fixed a bug when doing diff for a newly created file.
 * Sort starred files by last-modification time.
 
 Seafile Daemon

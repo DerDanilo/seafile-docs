@@ -25,12 +25,12 @@ If you following the steps on settings up a cluster, node B and node C should ha
 ### Install Dependencies (Java, LibreOffice, poppler)
 
 On Ubuntu/Debian:
-```
+```shell
 sudo apt-get install openjdk-7-jre libreoffice poppler-utils python-uno # or python3-uno for ubuntu 14.04+
 ```
 
 On CentOS/Red Hat:
-```
+```shell
 sudo yum install java-1.7.0-openjdk
 sudo yum install libreoffice libreoffice-headless libreoffice-pyuno
 sudo yum install poppler-utils
@@ -45,7 +45,7 @@ external_es_server = true
 
 Edit **seahub_settings.py** and add a line:
 
-```
+```python
 OFFICE_CONVERTOR_NODE = True
 ```
 
@@ -65,50 +65,75 @@ On nodes B and C, you need to:
 [INDEX FILES]
 external_es_server = true
 es_host = <ip of node A>
-es_port = 9500
+es_port = 9200
 ```
 
 Edit **seahub_settings.py** and add a line:
 
-```
-OFFICE_CONVERTOR_ROOT = http://<ip of node A>
+```python
+OFFICE_CONVERTOR_ROOT = 'http://<ip of node A>'
 ```
 
-Make sure requests to http://<ip of node A> is also handled by seahub. For example , you may need to add this nginx configuration in the background node:
+Make sure requests to http://<ip of node A> is also handled by Seahub. For example, you may need to add this Nginx configuration in the background node:
 
 ```
 server {
-      listen 80;
-      server_name <IP of node A>;
-      location / {
-          fastcgi_pass    127.0.0.1:8000;
-          ...
+    listen 80;
+    server_name <IP of node A>;
+    location / {
+        proxy_pass         http://127.0.0.1:8000;
+        ...
   }
 ```
 
 As a simple test, you can use this command to test if you set it up correctly.
 
-```
+```shell
 curl -v http://<IP of node A>/office-convert/internal/status/
 ```
 
-It should say "400 Bad Request" when you have nginx config updated.
+It should say "400 Bad Request" when you have Nginx config updated.
 
 
 ## Start the background node
 
 Type the following commands to start the background node (Note, one additional command `seafile-background-tasks.sh` is needed)
 
-```
+```shell
 ./seafile.sh start
-./seahub.sh start-fastcgi
+./seahub.sh start # or "./seahub.sh start-fastcgi" if you're using fastcgi
 ./seafile-background-tasks.sh start
 ```
 
 To stop the background node, type:
 
-```
+```shell
 ./seafile-background-tasks.sh stop
 ./seafile.sh stop
 ./seahub.sh stop
+```
+
+You should also configure Seafile background tasks to start on system bootup. For systemd based OS, you can add `/etc/systemd/system/seafile-background-tasks.service`:
+
+```
+[Unit]
+Description=Seafile Background Tasks Server
+After=network.target seahub.service
+
+[Service]
+Type=oneshot
+ExecStart=/opt/seafile/seafile-server-latest/seafile-background-tasks.sh start
+ExecStop=/opt/seafile/seafile-server-latest/seafile-background-tasks.sh stop
+RemainAfterExit=yes
+User=root
+Group=root
+
+[Install]
+WantedBy=multi-user.target
+```
+
+Then enable this task in systemd:
+
+```
+systemctl enable seafile-background-tasks.service
 ```

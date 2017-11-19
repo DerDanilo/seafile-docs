@@ -153,24 +153,29 @@ Use your favorite text editor and paste the following code:
 
 # stop the server
 echo Stopping the Seafile-Server...
-/etc/init.d/seafile-server stop
+systemctl stop seafile.service
+systemctl stop seahub.service
 
 echo Giving the server some time to shut down properly....
-sleep 10
+sleep 20
 
 # run the cleanup
 echo Seafile cleanup started...
 sudo -u seafile $pathtoseafile/seafile-server-latest/seaf-gc.sh -r
 
 echo Giving the server some time....
-sleep 3
+sleep 10
 
 # start the server again
 echo Starting the Seafile-Server...
-/etc/init.d/seafile-server start
+systemctl start seafile.service
+systemctl start seahub.service
 
 echo Seafile cleanup done!
 ```
+Make sure that the script has been given execution rights, to do that run this command.
+
+    sudo chmod +x /path/to/yourscript.sh
 
 Then open crontab with the root user
 

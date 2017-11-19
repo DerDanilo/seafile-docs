@@ -1,18 +1,14 @@
 # Web API (For Seafile server v5.1.0+)
 
-
 <p>
 <div class="toc">
 <ul>
-
 <li>
 <a href="#seafile-web-api">Seafile Web API</a>
 <ul>
-
     <li><a href="#api-basics">API Basics</a></li>
     <li><a href="#status-code">Status Code</a></li>
     <li><a href="#quick-start">Quick Start</a></li>
-
     <li>
         <a href="#account">Account</a>
         <ul>
@@ -20,7 +16,6 @@
             <li><a href="#server-info">Get Server Information</a></li>
         </ul>
     </li>
-
     <li>
         <a href="#starred-files">Starred Files</a>
         <ul>
@@ -29,7 +24,6 @@
             <li><a href="#unstar-a-file">Unstar A File</a></li>
         </ul>
     </li>
-
     <li>
         <a href="#group">Group</a>
         <ul>
@@ -62,7 +56,6 @@
             </li>
         </ul>
     </li>
-
     <li>
         <a href="#share">Share</a>
         <ul>
@@ -115,7 +108,6 @@
             </li>
         </ul>
     </li>
-
     <li>
         <a href="#folder-permission">Folder Permission</a>
         <ul>
@@ -139,7 +131,6 @@
             </li>
         </ul>
     </li>
-
     <li>
         <a href="#library">Library</a>
         <ul>
@@ -166,9 +157,9 @@
             <li><a href="#get-library-upload-links">Get Library Upload Links</a></li>
             <li><a href="#delete-library-download-link">Delete Library Download Link</a></li>
             <li><a href="#delete-library-upload-link">Delete Library Upload Link</a></li>
+            <li><a href="#search-library-by-name">Search Library By Name</a></li>
         </ul>
     </li>
-
     <li>
         <a href="#file">File</a>
         <ul>
@@ -194,7 +185,7 @@
                 </ul>
             </li>
             <li>
-                <a href="#update-file">Update file</a>
+                <a href="#update-file">Update File</a>
                 <ul>
                     <li><a href="#get-update-link">Get Update Link</a></li>
                     <li><a href="#update-file-1">Update File</a></li>
@@ -202,9 +193,18 @@
             </li>
             <li><a href="#get-upload-blocks-link">Get Upload Blocks Link</a></li>
             <li><a href="#get-update-blocks-link">Get Update Blocks Link</a></li>
+            <li>
+                <a href="#file-comments">File Comment</a>
+                <ul>
+                    <li><a href="#get-comment">Get Comment</a></li>
+                    <li><a href="#delete-comment">Delete Comment</a></li>
+                    <li><a href="#list-comments">List Comments</a></li>
+                    <li><a href="#post-comments">Post Comments</a></li>
+                    <li><a href="#get-number-of-comments">Get Number of Comments</a></li>
+                </ul>
+            </li>
         </ul>
     </li>
-
     <li>
         <a href="#directory">Directory</a>
         <ul>
@@ -216,7 +216,14 @@
             <li><a href="#revert-directory">Revert Directory</a></li>
         </ul>
     </li>
-
+    <li>
+        <a href="#asynchronously-copy-move-file-directory">Asynchronously Copy/Move File/Directory</a>
+        <ul>
+            <li><a href="#asynchronously-copy-move-file-directory-get-task-id">Get Task Id</a></li>
+            <li><a href="#asynchronously-copy-move-file-directory-cancel-task">Cancel Task</a></li>
+            <li><a href="#asynchronously-copy-move-file-directory-query-progress">Query Progress</a></li>
+        </ul>
+    </li>
     <li>
         <a href="#multiple-files-directories">Multiple Files / Directories</a>
         <ul>
@@ -226,7 +233,6 @@
             <li><a href="#multiple-files-directories-download">Download</a></li>
         </ul>
     </li>
-
     <li>
         <a href="#avatar">Avatar</a>
         <ul>
@@ -235,7 +241,6 @@
             <li><a href="#get-group-avatar">Get Group Avatar</a></li>
         </ul>
     </li>
-
     <li>
         <a href="#devices">Devices</a>
         <ul>
@@ -243,14 +248,19 @@
             <li><a href="#unlink-user-device">Unlink User Device</a></li>
         </ul>
     </li>
-
+    <li>
+        <a href="#snapshot-label">Snapshot Label</a>
+        <ul>
+            <li><a href="#get-snapshot-label">Get Snapshot Label</a></li>
+            <li><a href="#create-new-snapshot-label">Create New Snapshot Label</a></li>
+            <li><a href="#update-snapshot-label">Update Snapshot Label</a></li>
+        </ul>
+    </li>
     <li><a href="#get-file-activities">Get File Activities</a></li>
     <li><a href="#get-thumbnail-image">Get Thumbnail Image</a></li>
     <li><a href="#search-user">Search User</a></li>
-
 </ul>
 </li>
-
 <li>
 <a href="#admin-only">Admin Only</a>
 <ul>
@@ -265,7 +275,6 @@
             <li><a href="#admin-only-delete-account">Delete Account</a></li>
         </ul>
     </li>
-
     <li>
         <a href="#admin-only-devices">Devices</a>
         <ul>
@@ -276,7 +285,9 @@
             <li><a href="#admin-only-clean-device-errors">Clean Device Errors</a></li>
         </ul>
     </li>
-
+    <li>
+        <a href="#admin-only-get-snapshots-by-label">Get Snapshots by Label</a>
+    </li>
     <li>
         <a href="#admin-only-default-library">Default Library</a>
         <ul>
@@ -284,7 +295,6 @@
             <li><a href="#admin-only-create-user-default-library">Create User Default Library</a></li>
         </ul>
     </li>
-
     <li>
         <a href="#admin-only-libraries">Librairies</a>
         <ul>
@@ -296,7 +306,6 @@
             <li><a href="#admin-only-get-library-dirents">Get Library Dirents</a></li>
         </ul>
     </li>
-
     <li>
         <a href="#admin-only-shares">Shares</a>
         <ul>
@@ -310,7 +319,6 @@
             <li><a href="#admin-only-delete-repo-group-share">Delete Repo Group Share</a></li>
         </ul>
     </li>
-
     <li>
         <a href="#admin-only-groups">Groups</a>
         <ul>
@@ -325,7 +333,6 @@
             <li><a href="#admin-only-update-group-member-role">Update Group Member Role</a></li>
         </ul>
     </li>
-
     <li>
         <a href="#admin-only-shared-links">Shared Links</a>
         <ul>
@@ -346,7 +353,6 @@
             </li>
         </ul>
     </li>
-
     <li>
         <a href="#admin-only-log">Log</a>
         <ul>
@@ -356,19 +362,18 @@
             <li><a href="#admin-only-get-perm-audit-log">Get Permission Audit Log</a></li>
         </ul>
     </li>
-
     <li>
         <a href="#admin-only-organization">Organization</a>
         <ul>
             <li><a href="#admin-only-add-organization">Add Organization</a></li>
             <li><a href="#admin-only-add-organization-user">Add Organization User</a></li>
+            <li><a href="#admin-only-get-organization-user-info">Get Organization User Info</a></li>
+            <li><a href="#admin-only-update-organization-user-info">Update Organization User Info</a></li>
             <li><a href="#admin-only-delete-organization-user">Delete Organization User</a></li>
-            <li><a href="#admin-only-modify-organization-user">Modify Organization User</a></li>
         </ul>
     </li>
 </ul>
 </li>
-
 </ul>
 </div>
 </p>
@@ -864,7 +869,6 @@ curl -d "emails=new-member-1@email.com,new-member-2@email.com,new-member-3@email
         }
     ]
 }
-
 ```
 
 #### <a id="get-info-of-a-group-member"></a>Get Info of a Group Member
@@ -1120,7 +1124,7 @@ This api will list all folder/file download share links in all libraries created
 
 This api will list all folder/file download share links in a specific library.
 
-**GET** https://cloud.seafile.com/api/v2.1/share-links/?repo_id={rpeo_id}
+**GET** https://cloud.seafile.com/api/v2.1/share-links/?repo_id={repo_id}
 
 **Request parameters**
 
@@ -1250,7 +1254,7 @@ or a empty list `[]` if this file has no download share link.
 * repo-id
 * path (file/folder path)
 * password (not necessary)
-* expire_date (not necessary)
+* expire_days (not necessary)
 
 **Sample request**
 
@@ -1260,7 +1264,7 @@ Create download link for file
 
 Create download link for directory with password and expire date
 
-    curl -d "path=/bar/&repo_id=62ca6cf9-dab6-47e5-badc-bab13d9220ce&password=password&expire_date=6" -H 'Authorization: Token ef12bf1e66a1aa797a1d6556fdc9ae84f1e9249f' -H 'Accept: application/json; indent=4' https://cloud.seafile.com/api/v2.1/share-links/
+    curl -d "path=/bar/&repo_id=62ca6cf9-dab6-47e5-badc-bab13d9220ce&password=password&expire_days=6" -H 'Authorization: Token ef12bf1e66a1aa797a1d6556fdc9ae84f1e9249f' -H 'Accept: application/json; indent=4' https://cloud.seafile.com/api/v2.1/share-links/
 
 **Sample response**
 
@@ -1749,7 +1753,6 @@ Create upload link for directory with password
 **Sample response**
 
 ```
-
 {
     "failed": [
         {"repo_id": "3761ade3-100b-4c3b-9508-79b3a510e6f6", "error_msg": "This item has been shared to 1@1.com."}
@@ -2293,42 +2296,155 @@ curl -X PUT -d "folder_path=/123&permission=rw&group_id=65" -H 'Authorization: T
 
 ### <a id="list-libraries"></a>List Libraries
 
-**GET** https://cloud.seafile.com/api2/repos/
+**GET** https://cloud.seafile.com/api2/repos/?type={type}
 
-**Sample request**
+**Request parameters**
 
-    curl -H 'Authorization: Token 24fd3c026886e3121b2ca630805ed425c272cb96' -H 'Accept: application/json; indent=4' https://cloud.seafile.com/api2/repos/
+* type
+    * `mine`, get my owned libraries.
+    * `shared`, get libraries shared to me.
+    * `group`, get group libraries.
+    * `org`, get public libraires.
 
-**Sample response**
+NOTE: If no `type` parameter contained in the url, this api will return all libraries user can access.
 
-    [
+**Sample request for get all libraries I can accessed**
+
+```
+curl -H 'Authorization: Token 24fd3c026886e3121b2ca630805ed425c272cb96' -H 'Accept: application/json; indent=4' https://cloud.seafile.com/api2/repos/
+```
+
+**Sample response for get all libraries I can accessed**
+
+```
+[
     {
         "permission": "rw",
         "encrypted": false,
-        "mtime": 1400054900,
-        "owner": "user@mail.com",
-        "id": "f158d1dd-cc19-412c-b143-2ac83f352290",
+        "mtime_relative": "<time datetime=\"2017-08-12T10:48:42\" is=\"relative-time\" title=\"Sat, 12 Aug 2017 10:48:42 +0800\" >1 minute ago</time>",
+        "mtime": 1502506122,
+        "owner": "1@1.com",
+        "root": "",
+        "id": "b8c8eeaf-a62f-4ece-a2cb-e1c67f49f881",
         "size": 0,
-        "name": "foo",
+        "name": "group-lib",
         "type": "repo",
         "virtual": false,
-        "desc": "new library",
-        "root": "0000000000000000000000000000000000000000"
+        "version": 1,
+        "head_commit_id": "b0a8c797972b83af1054428a397f843612257425",
+        "size_formatted": "0 bytes"
     },
     {
         "permission": "rw",
         "encrypted": false,
-        "mtime": 1400054802,
-        "owner": "user@mail.com",
-        "id": "0536b11a-a5fd-4482-9314-728cb3472f54",
-        "size": 0,
-        "name": "foo",
+        "mtime_relative": "<time datetime=\"2017-08-03T17:42:49\" is=\"relative-time\" title=\"Thu, 3 Aug 2017 17:42:49 +0800\" >8 days ago</time>",
+        "mtime": 1501753369,
+        "owner": "1@1.com",
+        "root": "",
+        "id": "cd0df3ce-7e1b-4fc3-9b76-714c48db47d7",
+        "size": 1449,
+        "name": "My Library",
         "type": "repo",
         "virtual": false,
-        "desc": "new library",
-        "root": "0000000000000000000000000000000000000000"
+        "version": 1,
+        "head_commit_id": "9d47232bb87d39dbbba54fb8f09f9795b2d396e4",
+        "size_formatted": "1.4 KB"
+    },
+    {
+        "owner_nickname": "lian",
+        "permission": "rw",
+        "encrypted": false,
+        "mtime_relative": "<time datetime=\"2017-08-12T10:44:07\" is=\"relative-time\" title=\"Sat, 12 Aug 2017 10:44:07 +0800\" >6 minutes ago</time>",
+        "mtime": 1502505847,
+        "owner": "lian@lian.com",
+        "root": "",
+        "id": "c474a093-19dc-4ddf-b0b0-72b33214ba33",
+        "size": 708833229,
+        "name": "seacloud.cc.124",
+        "share_type": "personal",
+        "type": "srepo",
+        "version": 1,
+        "head_commit_id": "0b11fc08518d0c9acfd15e95a580664896484336",
+        "size_formatted": "676.0 MB"
+    },
+    {
+        "permission": "rw",
+        "encrypted": false,
+        "mtime": 1502506122,
+        "owner": "asdf",
+        "id": "b8c8eeaf-a62f-4ece-a2cb-e1c67f49f881",
+        "size": 0,
+        "name": "group-lib",
+        "root": "",
+        "version": 1,
+        "head_commit_id": "b0a8c797972b83af1054428a397f843612257425",
+        "type": "grepo",
+        "groupid": 1675
+    },
+    {
+        "share_from": "lian@lian.com",
+        "permission": "rw",
+        "encrypted": false,
+        "mtime_relative": "<time datetime=\"2017-08-12T10:33:47\" is=\"relative-time\" title=\"Sat, 12 Aug 2017 10:33:47 +0800\" >16 minutes ago</time>",
+        "mtime": 1502505227,
+        "owner": "Organization",
+        "root": "",
+        "id": "050ef344-45fb-49b6-80e6-e1bf094ab7bd",
+        "size": 0,
+        "name": "public-repo",
+        "share_type": "public",
+        "type": "grepo",
+        "version": 1,
+        "head_commit_id": "b71a95373896eb52e2971d72a869b7c413791b0b",
+        "size_formatted": "0 bytes"
     }
-    ]
+]
+```
+
+**Sample request for get my owned libraries**
+
+```
+curl -H "Authorization: Token 8cc0e7085a24b6abfee721e758b6aab4a90e7321" -H 'Accept: application/json; indent=4' "http://192.168.1.124:8000/api2/repos/?type=mine"
+```
+
+**Sample response for get my owned libraries**
+
+```
+[
+    {
+        "permission": "rw",
+        "encrypted": false,
+        "mtime_relative": "<time datetime=\"2017-08-12T10:48:42\" is=\"relative-time\" title=\"Sat, 12 Aug 2017 10:48:42 +0800\" >19 minutes ago</time>",
+        "mtime": 1502506122,
+        "owner": "1@1.com",
+        "root": "",
+        "id": "b8c8eeaf-a62f-4ece-a2cb-e1c67f49f881",
+        "size": 0,
+        "name": "group-lib",
+        "type": "repo",
+        "virtual": false,
+        "version": 1,
+        "head_commit_id": "b0a8c797972b83af1054428a397f843612257425",
+        "size_formatted": "0 bytes"
+    },
+    {
+        "permission": "rw",
+        "encrypted": false,
+        "mtime_relative": "<time datetime=\"2017-08-03T17:42:49\" is=\"relative-time\" title=\"Thu, 3 Aug 2017 17:42:49 +0800\" >8 days ago</time>",
+        "mtime": 1501753369,
+        "owner": "1@1.com",
+        "root": "",
+        "id": "cd0df3ce-7e1b-4fc3-9b76-714c48db47d7",
+        "size": 1449,
+        "name": "My Library",
+        "type": "repo",
+        "virtual": false,
+        "version": 1,
+        "head_commit_id": "9d47232bb87d39dbbba54fb8f09f9795b2d396e4",
+        "size_formatted": "1.4 KB"
+    }
+]
+```
 
 ### <a id="get-library-info"></a>Get Library Info
 
@@ -2856,9 +2972,11 @@ success
 
 * `input_fexts`, file extensions manually specific.
 
+* `with_permission`, `true` or `false`. Whether return permission info of the file or not, default is `false`.
+
 **Sample request**
 ```
-curl -H 'Authorization: Token 076de58233c09f19e7a5179abff14ad55987350e' -H 'Accept: application/json; charset=utf-8; indent=4' "https://cloud.seafile.com/api2/search/?q=seafile&search_repo=all&search_ftypes=custom&ftype=Document&input_fexts=md,png&per_page=3&page=3"
+curl -H 'Authorization: Token 076de58233c09f19e7a5179abff14ad55987350e' -H 'Accept: application/json; charset=utf-8; indent=4' "https://cloud.seafile.com/api2/search/?q=seafile&search_repo=all&search_ftypes=custom&ftype=Document&input_fexts=md,png&per_page=3&page=3&with_permission=true"
 ```
 
 **Sample response**
@@ -2870,6 +2988,7 @@ curl -H 'Authorization: Token 076de58233c09f19e7a5179abff14ad55987350e' -H 'Acce
         {
             "repo_id": "040a8aad-5646-4c68-ba8a-73f90c60089f",
             "name": "seafile \u8fd0\u7ef4.docx",
+            "permission": "r",
             "oid": "ecba7db3d6b818873bf94cb1f2161f6a0fc22494",
             "last_modified": 1482910730,
             "content_highlight": "... .<b>seafile</b>.com...",
@@ -2881,6 +3000,7 @@ curl -H 'Authorization: Token 076de58233c09f19e7a5179abff14ad55987350e' -H 'Acce
         {
             "repo_id": "233191c7-8e33-4fd2-b0a3-e480363d8e0d",
             "name": "seafile-tutorial.doc",
+            "permission": "rw",
             "oid": "1066014004ad479dd7f3cc0a12462c3f1fd2edeb",
             "last_modified": 1389771193,
             "content_highlight": "...A Brief Tour of <b>Seafile</b> <b>Seafile</b> is a file m...",
@@ -2892,6 +3012,7 @@ curl -H 'Authorization: Token 076de58233c09f19e7a5179abff14ad55987350e' -H 'Acce
         {
             "repo_id": "233191c7-8e33-4fd2-b0a3-e480363d8e0d",
             "name": "seafile_vm.md",
+            "permission": "rw",
             "oid": "66c8dbe139333ead26b4878340da486fffdc5330",
             "last_modified": 1439277140,
             "content_highlight": "...<b>Seafile</b> server VM...",
@@ -3038,6 +3159,60 @@ curl -H 'Authorization: Token 076de58233c09f19e7a5179abff14ad55987350e' -H 'Acce
 * 403 Permission denied.
 * 404 Library not found.
 * 404 Link not found.
+
+#### <a id="search-library-by-name"></a>Search Library By Name
+
+**GET** https://cloud.seafile.com/api2/repos/
+
+**Request parameters**
+
+* type (optional)
+* nameContains (optional)
+
+**Sample request**
+
+    Search the all library
+
+    curl -H 'Authorization: Token 24fd3c026886e3121b2ca630805ed425c272cb96' -sS 'https://cloud.seafile.com/api2/repos/?nameContains=T'
+
+**Sample response**
+
+    [
+        {
+            "root": "",
+            "modifier_email": null,
+            "name": "TEST",
+            "permission": "rw",
+            "size_formatted": "424.6 MB",
+            "virtual": false,
+            "mtime_relative": "<time datetime=\"2017-07-04T08:30:33\" is=\"relative-time\" title=\"Tue, 4 Jul 2017 08:30:33 +0000\" >2017-07-04</time>",
+            "head_commit_id": "05418e616a5325b3f0ccfaf7d4c54c803b8168de",
+            "encrypted": false,
+            "version": 1,
+            "mtime": 1499157033,
+            "owner": "admin@admin.com",
+            "modifier_contact_email": "",
+            "type": "repo",
+            "id": "a9025464-2c72-4b9c-9cdd-6de62e56f696",
+            "modifier_name": "",
+            "size": 445243555
+        }
+    ]
+
+**Sample request**
+
+    Search the specified library
+
+    curl -H 'Authorization: Token 24fd3c026886e3121b2ca630805ed425c272cb96' -sS 'https://cloud.seafile.com/api2/repos/?type=mime&nameContains=T'
+
+**Sample response**
+
+    []
+
+
+**Errors**
+
+None
 
 ## <a id="file"></a>File
 
@@ -3260,7 +3435,7 @@ For more info, you can see [this official docs](http://wopi.readthedocs.org/en/l
 
 ### <a id="create-file"></a>Create File
 
-**POST** https://cloud.seafile.com/api2/repos/{repo-id}/file/?p=/foo.c
+**POST** https://cloud.seafile.com/api/v2.1/repos/{repo_id}/file/?p={file_path}
 
 **Request parameters**
 
@@ -3269,24 +3444,31 @@ For more info, you can see [this official docs](http://wopi.readthedocs.org/en/l
 * operation
 
 **Sample request**
-
-    curl -v -d "operation=create" -H 'Authorization: Token f2210dacd9c6ccb8133606d94ff8e61d99b477fd' -H 'Accept: application/json; charset=utf-8; indent=4' https://cloud.seafile.com/api2/repos/dae8cecc-2359-4d33-aa42-01b7846c4b32/file/?p=/foo.c
+```
+curl -d 'operation=create' -H 'Authorization: Token c5de3074be40861f399f02c65149c6460bbf073f' "https://cloud.seafile.com/api/v2.1/repos/7460f7ac-a0ff-4585-8906-bb5a57d2e118/file/?p=/test.xlsx"
+```
 
 **Sample response**
-
-    ...
-    < HTTP/1.1 201 CREATED
-    ...
-    "success"
-
-**Success**
-
-   Response code is 201, and a string `"success"` is returned.
+```
+{
+    'is_locked': False,
+    'mtime': '2017-09-12T14:57:42+08:00',
+    'obj_id': u'44bdca6005429390d1ecc6943b05c821bd30917a',
+    'obj_name': u'test.xlsx',
+    'parent_dir': u'/',
+    'repo_id': u'7460f7ac-a0ff-4585-8906-bb5a57d2e118',
+    'size': 7631,
+    'type': 'file'
+}
+```
 
 **Errors**
 
-* 403 FORBIDDEN
-* 520 OPERATION FAILED, fail to create file
+* 400 operation/name invalid.
+* 400 operation can only be 'create', 'rename', 'move', 'copy' or 'revert'.
+* 404 Library/Folder not found.
+* 403 Permission denied.
+* 500 Internal Server Error
 
 ### <a id="rename-file"></a>Rename File
 
@@ -3697,6 +3879,186 @@ The id of the updated file
 - 403 Can not access repo
 - 520 above quota
 
+### <a id="file-comments"></a>File Comments
+
+#### <a id="get-comment"></a>Get Comment
+
+**GET** https://cloud.seafile.com/api2/repos/{repo_id}/file/comments/{pk}/
+
+* rpeo_id
+* pk
+
+**Sample request**
+
+    curl -H "Authorization: Token 05b05e30ee979e333ff33a437988820494fb0afd"  https://cloud.seafile.com/api2/repos/4674c2bb-3702-4dd0-b768-8952db27ac87/file/comments/1/
+
+**Sample response**
+
+    {
+        "comment": "welcome",
+        "repo_id": "4674c2bb-3702-4dd0-b768-8952db27ac87",
+        "item_name": "q",
+        "created_at": "2017-10-10T02:42:20+00:00",
+        "parent_path": "/",
+        "avatar_url": "https://cloud.seafile.com/media/avatars/default.png",
+        "user_name": "admin",
+        "id": 3,
+        "user_email": "admin@admin.com",
+        "user_contact_email": "admin@admin.com"
+    }
+
+**Errors**
+
+* 400 Wrong comment id
+* 403 Can not access repo
+
+#### <a id="delete-comment"></a>Delete Comment
+
+**Delete** https://cloud.seafile.com/api2/repos/{repo_id}/file/comments/{pk}/
+
+* rpeo_id
+* pk
+
+**Sample request**
+
+    curl -X DELETE -H "Authorization: Token 05b05e30ee979e333ff33a437988820494fb0afd"  https://cloud.seafile.com/api2/repos/4674c2bb-3702-4dd0-b768-8952db27ac87/file/comments/1/
+
+**Sample response**
+
+    None
+
+**Errors**
+
+* 400 Wrong comment id
+* 403 Can not access repo
+* 403 Permission denied
+
+#### <a id="list-comments"></a>List Comments
+
+**GET** https://cloud.seafile.com/api2/repos/{repo_id}/file/comments/?p=/doc/doc
+
+* rpeo_id
+* p
+
+**Sample request**
+
+    curl -H "Authorization: Token 05b05e30ee979e333ff33a437988820494fb0afd"  https://cloud.seafile.com/api2/repos/4674c2bb-3702-4dd0-b768-8952db27ac87/file/comments/?p=%2Fdoc%2Fdoc
+
+**Sample response**
+
+    {
+        "comments": [
+            {
+                "comment": "word",
+                "repo_id": "4674c2bb-3702-4dd0-b768-8952db27ac87",
+                "item_name": "doc",
+                "created_at": "2017-10-11T02:49:42+00:00",
+                "parent_path": "/doc",
+                "avatar_url": "https://cloud.seafile.com/media/avatars/default.png",
+                "user_name": "admin",
+                "id": 7,
+                "user_email": "admin@admin.com",
+                "user_contact_email": "admin@admin.com"
+            },
+            {
+                "comment": "help",
+                "repo_id": "4674c2bb-3702-4dd0-b768-8952db27ac87",
+                "item_name": "doc",
+                "created_at": "2017-10-11T02:49:44+00:00",
+                "parent_path": "/doc",
+                "avatar_url": "https://cloud.seafile.com/media/avatars/default.png",
+                "user_name": "admin",
+                "id": 8,
+                "user_email": "admin@admin.com",
+                "user_contact_email": "admin@admin.com"
+            },
+            {
+                "comment": "test",
+                "repo_id": "4674c2bb-3702-4dd0-b768-8952db27ac87",
+                "item_name": "doc",
+                "created_at": "2017-10-11T03:32:37+00:00",
+                "parent_path": "/doc",
+                "avatar_url": "https://cloud.seafile.com/media/avatars/default.png",
+                "user_name": "admin",
+                "id": 10,
+                "user_email": "admin@admin.com",
+                "user_contact_email": "admin@admin.com"
+            }
+        ]
+    }
+
+**Errors**
+
+* 400 Wrong path
+* 403 Can not access repo
+
+#### <a id="post-comments"></a>Post Comments
+
+**POST** https://cloud.seafile.com/api2/repos/{repo_id}/file/comments/?p=/doc/doc
+
+* rpeo_id
+* p
+* comment
+
+**Sample request**
+
+    curl -X POST -d "comment=hello" -H "Authorization: Token 05b05e30ee979e333ff33a437988820494fb0afd"  https://cloud.seafile.com/api2/repos/4674c2bb-3702-4dd0-b768-8952db27ac87/file/comments/?p=%2Fdoc%2Fdoc
+
+**Sample response**
+
+    {
+        "comment": "hello",
+        "repo_id": "4674c2bb-3702-4dd0-b768-8952db27ac87",
+        "item_name": "doc",
+        "created_at": "2017-10-11T06:43:31+00:00",
+        "parent_path": "/doc",
+        "avatar_url": "https://cloud.seafile.com/media/avatars/default.png",
+        "user_name": "admin",
+        "id": 11,
+        "user_email": "admin@admin.com",
+        "user_contact_email": "admin@admin.com"
+    }
+
+**Errors**
+
+* 400 Wrong path
+* 400 Comment can not be empty
+* 403 Can not access repo
+* 404 File not found
+* 500 Internal error
+
+
+#### <a id="get-number-of-comments"></a>Get Number of Comments
+
+**GET** https://cloud.seafile.com/api2/repos/{repo_id}/file/comments/counts/?p=/doc
+
+* rpeo_id
+* p
+
+**Sample request**
+
+`get the number of file comment correspoding to the file under the folder`
+
+    curl -H "Authorization: Token 05b05e30ee979e333ff33a437988820494fb0afd"  -sS 'https://cloud.seafile.com/api2/repos/4674c2bb-3702-4dd0-b768-8952db27ac87/file/comments/counts/?p=/doc'
+
+**Sample response**
+
+    [
+        {
+            "doc": 3
+        },
+        {
+            "pdfs": 1
+        }
+    ]
+
+**Errors**
+
+* 400 Wrong path
+* 403 Can not access repo
+* 404 Folder not found
+* 500 Internal error
+
 ## <a id="directory"></a>Directory
 
 ### <a id="list-directory-entries"></a>List Directory Entries
@@ -3963,6 +4325,103 @@ After the task finished, you can manually generate directory download url with t
     FILE_SERVER_ROOT/zip/{zip_token}
 
 For example, `https://cloud.seafile.com/seafhttp/zip/b2272645-35ee-44ce-8f68-07c022107015` is the final url here.
+
+## <a id="asynchronously-copy-move-file-directory"></a>Asynchronously Copy/Move File/Directory
+
+### <a id="asynchronously-copy-move-file-directory-get-task-id"></a>Get Task Id
+
+**POST** https://cloud.seafile.com/api/v2.1/copy-move-task/
+
+**Request parameters**
+
+* src_repo_id
+* src_parent_dir
+* src_dirent_name
+* dst_repo_id
+* dst_parent_dir
+* operation, `copy` or `move`
+* dirent_type, `file` or `dir`
+
+**Sample request**
+
+Sample for copy file.
+
+```
+curl -d "src_repo_id=534258e2-761b-465c-9e2c-56e021d3853f&src_parent_dir=/&src_dirent_name=file.md&dst_repo_id=a3fa768d-0f00-4343-8b8d-07b4077881db&dst_parent_dir=/&operation=copy&dirent_type=file" -H 'Authorization: Token ae265ae599a29c238ca25fb63087859798d5f55d' -H 'Accept: application/json; charset=utf-8; indent=4' 'http://192.168.1.124:8000/api/v2.1/copy-move-task/'
+```
+
+**Sample response**
+
+```
+{
+    "task_id": "d1ca2b8c-8ab8-4dd4-8ad7-842130764484"
+}
+```
+
+**Errors**
+
+* 400 path/operation/dirent_type invalid.
+* 404 Library/Folder not found.
+* 403 Permission denied.
+* 500 Internal Server Error
+
+### <a id="asynchronously-copy-move-file-directory-cancel-task"></a>Cancel Task
+
+**DELETE** https://cloud.seafile.com/api/v2.1/copy-move-task/
+
+**Request parameters**
+
+* task_id
+
+**Sample request**
+
+```
+curl -X DELETE -d "task_id=d1ca2b8c-8ab8-4dd4-8ad7-842130764484" -H 'Authorization: Token ae265ae599a29c238ca25fb63087859798d5f55d' -H 'Accept: application/json; charset=utf-8; indent=4' 'http://192.168.1.124:8000/api/v2.1/copy-move-task/'
+```
+
+**Sample response**
+
+```
+{
+    "success": true
+}
+```
+
+**Errors**
+
+* 400 task_id invalid.
+* 500 Internal Server Error
+
+### <a id="asynchronously-copy-move-file-directory-query-progress"></a>Query Progress
+
+**GET** https://cloud.seafile.com/api/v2.1/query-copy-move-progress/
+
+**Request parameters**
+
+* task_id
+
+**Sample request**
+
+```
+curl -H 'Authorization: Token ae265ae599a29c238ca25fb63087859798d5f55d' -H 'Accept: application/json; charset=utf-8; indent=4' 'http://192.168.1.124:8000/api/v2.1/query-copy-move-progress/?task_id=d1ca2b8c-8ab8-4dd4-8ad7-842130764484'
+```
+
+**Sample response**
+
+```
+{
+    "successful": true,
+    "canceled": false,
+    "total": 1,
+    "done": 1,
+    "failed": false
+}
+```
+
+**Errors**
+
+* 400 task_id invalid.
+* 500 Internal Server Error
 
 ## <a id="multiple-files-directories"></a>Multiple Files / Directories
 
@@ -4281,6 +4740,141 @@ For example, `https://cloud.seafile.com/seafhttp/zip/b2272645-35ee-44ce-8f68-07c
 * 400 platform invalid
 * 400 device_id invalid
 * 500 Internal Server Error
+
+## <a id="snapshot-label"></a>Snapshot Label
+
+### <a id="get-snapshot-label"></a>Get Snapshot Label
+
+**GET** https://cloud.seafile.com/api/v2.1/revision-tags/tag-names/
+
+**Sample request**
+
+Sample for get snapshot label
+
+```
+curl -H 'Authorization: Token 88aaa1e6fe35d0444868b4c67f8ca1766cf82f55' -H 'Accept: application/json; indent=4' http://cloud.seafile.com/api/v2.1/revision-tags/tag-names/
+```
+
+**Sample response**
+
+```
+[
+    "q1",
+    "qwe",
+    "qwe",
+    "qwe_-.12",
+    "qwe_-1.",
+    "r",
+    "r",
+    "v3",
+    "\u4e2d\u6587",
+    "\u82f1\u6587"
+]
+```
+
+### <a id="create-new-snapshot-label"></a>Create New Snapshot Label
+
+**POST** https://cloud.seafile.com/api/v2.1/revision-tags/tagged-items/
+
+**Request parameters**
+* repo_id
+* commit_id, optional
+* tag_names
+
+**Sample request**
+
+Sample for create snapshot label.
+
+```
+curl -d "repo_id=7377c95d-b303-4914-a555-306651cc4cbf&commit_id=4c03938da11e83d6c1d3e8ff469e92f46a80eeaf&tag_names=v2.1,v2.2" -H 'Authorization: Token 88aaa1e6fe35d0444868b4c67f8ca1766cf82f55' -H 'Accept: application/json; indent=4' http://cloud.seafile.com/api/v2.1/revision-tags/tagged-items/
+```
+
+**Sample response**
+
+```
+{
+    "revisionTags": [
+        {
+            "tag": "v2.1",
+            "tag_creator": "foo@foo.com",
+            "revision": {
+                "commit_id": "4c03938da11e83d6c1d3e8ff469e92f46a80eeaf",
+                "repo_id": "7377c95d-b303-4914-a555-306651cc4cbf",
+                "contact_email": "foo@foo.com",
+                "name": "foo",
+                "time": "2017-09-13T15:20:54+08:00",
+                "link": "/repo/history/view/7377c95d-b303-4914-a555-306651cc4cbf/?commit_id=4c03938da11e83d6c1d3e8ff469e92f46a80eeaf",
+                "email": "foo@foo.com",
+                "description": "Added \"ca (1).js\"."
+            }
+        },
+        {
+            "tag": "v2.2",
+            "tag_creator": "foo@foo.com",
+            "revision": {
+                "commit_id": "4c03938da11e83d6c1d3e8ff469e92f46a80eeaf",
+                "repo_id": "7377c95d-b303-4914-a555-306651cc4cbf",
+                "contact_email": "foo@foo.com",
+                "name": "foo",
+                "time": "2017-09-13T15:20:54+08:00",
+                "link": "/repo/history/view/7377c95d-b303-4914-a555-306651cc4cbf/?commit_id=4c03938da11e83d6c1d3e8ff469e92f46a80eeaf",
+                "email": "foo@foo.com",
+                "description": "Added \"ca (1).js\"."
+            }
+        }
+    ]
+}
+```
+
+**Errors**
+
+* 400 repo_id/commit_id/tag_names invalid.
+* 403 Permission denied(need rw permission).
+
+### <a id="update-snapshot-label"></a>Update Snapshot Label
+
+**PUT** https://cloud.seafile.com/api/v2.1/revision-tags/tagged-items/
+
+**Request parameters**
+* repo_id
+* commit_id(default is head commit if commit_id is empty)
+* tag_names
+
+**Sample request**
+
+Sample for update snapshot label.
+
+```
+curl -X PUT -d "repo_id=7377c95d-b303-4914-a555-306651cc4cbf&commit_id=4c03938da11e83d6c1d3e8ff469e92f46a80eeaf&tag_names=v3" -H 'Authorization: Token 88aaa1e6fe35d0444868b4c67f8ca1766cf82f55' -H 'Accept: application/json; indent=4' http://cloud.seafile.com/api/v2.1/revision-tags/tagged-items/
+```
+
+**Sample response**
+
+```
+{
+    "revisionTags": [
+        {
+            "tag": "v3",
+            "tag_creator": "foo@foo.com",
+            "revision": {
+                "commit_id": "4c03938da11e83d6c1d3e8ff469e92f46a80eeaf",
+                "repo_id": "7377c95d-b303-4914-a555-306651cc4cbf",
+                "contact_email": "foo@foo.com",
+                "name": "foo",
+                "time": "2017-09-13T15:20:54+08:00",
+                "link": "/repo/history/view/7377c95d-b303-4914-a555-306651cc4cbf/?commit_id=4c03938da11e83d6c1d3e8ff469e92f46a80eeaf",
+                "email": "foo@foo.com",
+                "description": "Added \"ca (1).js\"."
+            }
+        }
+    ]
+}
+```
+
+**Errors**
+
+* 400 repo_id/commit_id/tag_names invalid.
+* 403 Permission denied(need rw permission).
 
 ## <a id="get-file-activities"></a>Get File Activities
 
@@ -4744,6 +5338,45 @@ This api is only supported in pro edition.
 
 * 403 Feature disabled.
 * 500 Internal Server Error
+
+## <a id="admin-only-get-snapshots-by-label"></a>Get Snapshots by Label
+
+**GET** https://cloud.seafile.com/api/v2.1/admin/revision-tags/tagged-items/
+
+**Request parameters**
+* user, optional
+* repo_id, optional
+* tag_name, optional
+* tag_contains, optional
+
+**Sample request**
+
+Sample for get snapshots by label
+
+```
+curl -H 'Authorization: Token 88aaa1e6fe35d0444868b4c67f8ca1766cf82f55' -H 'Accept: application/json; indent=4' http://cloud.seafile.com/api/v2.1/admin/revision-tags/tagged-items/?repo_id=7377c95d-b303-4914-a555-306651cc4cbf&tag_contains=v
+```
+
+**Sample response**
+
+```
+[
+    {
+        "tag": "v3",
+        "tag_creator": "foo@foo.com",
+        "revision": {
+            "commit_id": "4c03938da11e83d6c1d3e8ff469e92f46a80eeaf",
+            "repo_id": "7377c95d-b303-4914-a555-306651cc4cbf",
+            "contact_email": "foo@foo.com",
+            "name": "foo",
+            "time": "2017-09-13T15:20:54+08:00",
+            "link": "/repo/history/view/7377c95d-b303-4914-a555-306651cc4cbf/?commit_id=4c03938da11e83d6c1d3e8ff469e92f46a80eeaf",
+            "email": "foo@foo.com",
+            "description": "Added \"ca (1).js\"."
+        }
+    }
+]
+```
 
 ## <a id="admin-only-default-library"></a>Default Library
 
@@ -5791,6 +6424,8 @@ curl -H 'Authorization: Token cbd7705c06846425ed5c46ae0313d5b098d24154' -H 'Acce
 }
 ```
 
+After you get the download link for the (sub) folder, you should use the token in the download link (here's `395e0ea8-3936-4084-b650-64a93d8a313d`) to check if the background compression packaging has been completed by [Query Task Progress](#download-directory-query-task-progress), once it is finished, you can use the download link to download the (sub) folder.
+
 **Sample request for download (sub) file in shared dir**
 ```
 curl -H 'Authorization: Token cbd7705c06846425ed5c46ae0313d5b098d24154' -H 'Accept: application/json; charset=utf-8; indent=4' "http://192.168.1.124:8000/api/v2.1/admin/share-links/db62f56baf1b4460996e/download/?path=/sdf/12.docx&type=file"
@@ -5843,6 +6478,7 @@ curl -d 'password=11111111' -H 'Authorization: Token cbd7705c06846425ed5c46ae031
 {
     "success": true
 }
+```
 
 **Errors**
 
@@ -5905,10 +6541,11 @@ curl -H 'Authorization: Token cbd7705c06846425ed5c46ae0313d5b098d24154' -H 'Acce
 **Sample response**
 ```
 {
-    "upload_link": "http://192.168.1.124:8082/upload-api/360fe7d6dc684045b7f6"
+    "upload_link": "http://192.168.1.124:8082/upload-api/b08b20e4-beb2-4c7a-af03-fed6be859330"
 }
+```
 
-After get upload link, you can upload file to the shared dir, for more info, please see <a id="upload-file-1">Upload File</a>.
+After get upload link, you can upload file to the shared dir, for more info, please see [Upload File](#upload-file-1).
 
 **Errors**
 
@@ -5935,6 +6572,7 @@ curl -d 'password=11111111' -H 'Authorization: Token cbd7705c06846425ed5c46ae031
 {
     "success": true
 }
+```
 
 **Errors**
 
@@ -6144,18 +6782,18 @@ This api is only supported in pro edition (since 6.0.9).
 * password
 
 **Sample request**
-
-    curl -X POST -d "email=6@org.com&password=6" -H "Authorization: Token 0eb24ce5db35a31f70171eca2f760f03f59fa09a" -H 'Accept: application/json; indent=4' https://cloud.seafile.com/api/v2.1/admin/organizations/160/users/
+    curl -d "username=1@org-3.com&password=1&org_name=org-3&prefix=org-3&quota=100&member_limit=10" -H "Authorization: Token 3f1e23157c3a1fd740e9dc1c5d748929fe319b95" -H 'Accept: application/json; indent=4' http://192.168.1.165/api2/organization/
 
 **Sample response**
-
 ```
 {
-    "active": true,
+    "quota_usage": 0,
+    "name": "6",
+    "org_id": 1,
     "contact_email": "6@org.com",
-    "org_id": 160,
-    "email": "6@org.com",
-    "name": "6"
+    "active": true,
+    "quota_total": -1,
+    "email": "6@org.com"
 }
 ```
 
@@ -6169,6 +6807,83 @@ This api is only supported in pro edition (since 6.0.9).
 * 403 Failed. You can only invite %d members.
 * 404 Organization not found.
 * 500 Fail to add user.
+* 500 Internal Server Error
+
+### <a id="admin-only-get-organization-user-info"></a>Get Organization User Info
+
+This api is only supported in pro edition (since 6.1.5).
+
+**GET** https://cloud.seafile.com/api/v2.1/admin/organizations/{org_id}/users/{email}/
+
+**Request parameters**
+
+* org_id
+* email
+
+**Sample request**
+
+    curl -H "Authorization: Token 3f1e23157c3a1fd740e9dc1c5d748929fe319b95" -H 'Accept: application/json; indent=4' http://192.168.1.165/api/v2.1/admin/organizations/1/users/6@org.com/
+
+**Sample response**
+```
+{
+    "quota_usage": 0,
+    "name": "6",
+    "org_id": 1,
+    "contact_email": "6@org.com",
+    "active": true,
+    "quota_total": -1,
+    "email": "6@org.com"
+}
+```
+
+**Errors**
+
+* 400 org_id invalid.
+* 400 User is not member of organization.
+* 404 Organization not found.
+* 404 User not found.
+* 500 Internal Server Error
+
+### <a id="admin-only-update-organization-user-info"></a>Updage Organization User Info
+
+This api is only supported in pro edition (since 6.1.5).
+
+**PUT** https://cloud.seafile.com/api/v2.1/admin/organizations/{org_id}/users/{email}/
+
+**Request parameters**
+
+* org_id
+* email
+* active, `true` or `false`
+* name
+* contact_email
+* quota_total, integer greater than 0, unit is MB.
+
+**Sample request**
+
+    curl -X PUT -d "active=false&name=name-of-6&contact_email=6-contact@email.com&quota_total=23" -H "Authorization: Token 3f1e23157c3a1fd740e9dc1c5d748929fe319b95" -H 'Accept: application/json; indent=4' http://192.168.1.165/api/v2.1/admin/organizations/1/users/6@org.com/
+
+**Sample response**
+```
+{
+    "quota_usage": 0,
+    "name": "name-of-6",
+    "org_id": 1,
+    "contact_email": "6-contact@email.com",
+    "active": false,
+    "quota_total": 23,
+    "email": "6@org.com"
+}
+```
+
+**Errors**
+
+* 400 org_id invalid.
+* 400 active invalid, should be 'true' or 'false'.
+* 400 Failed to set quota.
+* 404 Organization not found.
+* 404 User not found.
 * 500 Internal Server Error
 
 ### <a id="admin-only-delete-organization-user"></a>Delete Organization User
@@ -6198,43 +6913,6 @@ This api is only supported in pro edition (since 6.0.9).
 
 * 400 org_id invalid.
 * 403 Failed to delete: is an organization creator.
-* 404 Organization not found.
-* 404 User not found.
-* 500 Internal Server Error
-
-### <a id="admin-only-modify-organization-user"></a>Modify Organization User
-
-This api is only supported in pro edition (since 6.0.9).
-
-**PUT** https://cloud.seafile.com/api/v2.1/admin/organizations/{org_id}/users/{email}/
-
-**Request parameters**
-
-* org_id
-* email
-* active, `true` or `false`
-
-**Sample request**
-
-    curl -X PUT -d "active=false" -H "Authorization: Token 0eb24ce5db35a31f70171eca2f760f03f59fa09a" -H 'Accept: application/json; indent=4' https://cloud.seafile.com/api/v2.1/admin/organizations/160/users/4@org.com/
-
-**Sample response**
-
-```
-{
-    "active": false,
-    "contact_email": "4@org.com",
-    "org_id": 160,
-    "email": "4@org.com",
-    "name": "4"
-}
-```
-
-**Errors**
-
-* 400 org_id invalid.
-* 400 active invalid.
-* 400 active invalid, should be 'true' or 'false'.
 * 404 Organization not found.
 * 404 User not found.
 * 500 Internal Server Error

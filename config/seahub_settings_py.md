@@ -4,35 +4,7 @@ Note: You can also modify most of the config items via web interface. The config
 
 ##  Sending Email Notifications on Seahub
 
-A few features work better if it can send email notifications, such as notifying users about new messages.
-If you want to setup email notifications, please add the following lines to `seahub_settings.py` (and set your email server).
-
-```python
-EMAIL_USE_TLS = False
-EMAIL_HOST = 'smtp.example.com'        # smtp server
-EMAIL_HOST_USER = 'username@example.com'    # username and domain
-EMAIL_HOST_PASSWORD = 'password'    # password
-EMAIL_PORT = 25
-DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
-SERVER_EMAIL = EMAIL_HOST_USER
-```
-
-If you are using Gmail as email server, use following lines:
-
-```python
-EMAIL_USE_TLS = True
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = 'username@gmail.com'
-EMAIL_HOST_PASSWORD = 'password'
-EMAIL_PORT = 587
-DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
-SERVER_EMAIL = EMAIL_HOST_USER
-```
-
-**Note**: If your Email service still can not work, you may checkout the log file `logs/seahub.log` to see what may cause the problem. For complete email notification list, please refer to [Email notification list](customize_email_notifications.md).
-
-**Note2**: If you want to use the Email service without authentication leaf `EMAIL_HOST_PASSWORD` **blank** (`''`).
-
+Refer to [email sending documentation](sending_email.md).
 
 ## Memcached
 
@@ -96,9 +68,14 @@ SESSION_SAVE_EVERY_REQUEST = False
 # Whether enable personal wiki and group wiki. Default is `False`
 # Since 6.1.0 CE
 ENABLE_WIKI = True
-
 ```
 
+## `repo snapshot label` feature
+
+```
+# Turn on this option to let users to add a label to a library snapshot. Default is `False`
+ENABLE_REPO_SNAPSHOT_LABEL = False
+```
 
 ## Library options
 
@@ -147,18 +124,21 @@ groovy, rst, patch, go"""
 # NOTE: since version 4.0.2
 ENABLE_THUMBNAIL = True
 
-# Enable or disable thumbnail for video. ffmpeg and moviepy should be installed first. 
+# Seafile only generates thumbnails for images smaller than the following size.
+THUMBNAIL_IMAGE_SIZE_LIMIT = 30 # MB
+
+# Enable or disable thumbnail for video. ffmpeg and moviepy should be installed first.
 # For details, please refer to https://manual.seafile.com/deploy/video_thumbnails.html
 # NOTE: since version 6.1
 ENABLE_VIDEO_THUMBNAIL = False
 
 # Use the frame at 5 second as thumbnail
-THUMBNAIL_VIDEO_FRAME_TIME = 5  
+THUMBNAIL_VIDEO_FRAME_TIME = 5
 
 # Absolute filesystem path to the directory that will hold thumbnail files.
 THUMBNAIL_ROOT = '/haiwen/seahub-data/thumbnail/thumb/'
 
-# Default size for picture preview. Enlarge this size can improve the preview quality. 
+# Default size for picture preview. Enlarge this size can improve the preview quality.
 # NOTE: since version 6.1.1
 THUMBNAIL_SIZE_FOR_ORIGINAL = 1024
 ```
@@ -232,6 +212,9 @@ MAX_NUMBER_OF_FILES_FOR_FILEUPLOAD = 500
 # Since version 6.1.1
 SHARE_LINK_EMAIL_LANGUAGE = ''
 
+# Interval for browser requests unread notifications
+# Since PRO 6.1.4 or CE 6.1.2
+UNREAD_NOTIFICATIONS_REQUEST_INTERVAL = 3 * 60 # seconds
 
 ```
 
@@ -288,11 +271,51 @@ REST_FRAMEWORK = {
     'UNICODE_JSON': False,
 }
 
-# Throtting whitelist used to disable throttle for certain IPs. 
+# Throtting whitelist used to disable throttle for certain IPs.
 # e.g. REST_FRAMEWORK_THROTTING_WHITELIST = ['127.0.0.1', '192.168.1.1']
-# Please make sure `REMOTE_ADDR` header is configured in Nginx conf according to https://manual.seafile.com/deploy/deploy_with_nginx.html. 
+# Please make sure `REMOTE_ADDR` header is configured in Nginx conf according to https://manual.seafile.com/deploy/deploy_with_nginx.html.
 REST_FRAMEWORK_THROTTING_WHITELIST = []
 ```
+
+## Seahub Custom Functions
+
+Since version 6.2, you can define a custome function to modify the result of user search function.
+
+For example, if you want to limit user only search users in the same institution, you can define `custom_search_user` function in `{seafile install path}/conf/seahub_custom_functions/__init__.py`
+
+Code example:
+
+```
+import os
+import sys
+
+current_path = os.path.dirname(os.path.abspath(__file__))
+seahub_dir = os.path.join(current_path, \
+        '../../seafile-server-latest/seahub/seahub')
+sys.path.append(seahub_dir)
+
+from seahub.profile.models import Profile
+def custom_search_user(request, emails):
+
+    institution_name = ''
+
+    username = request.user.username
+    profile = Profile.objects.get_profile_by_user(username)
+    if profile:
+        institution_name = profile.institution
+
+    inst_users = [p.user for p in
+            Profile.objects.filter(institution=institution_name)]
+
+    filtered_emails = []
+    for email in emails:
+        if email in inst_users:
+            filtered_emails.append(email)
+
+    return filtered_emails
+```
+
+> **NOTE**, you should NOT change the name of `custom_search_user` and `seahub_custom_functions/__init__.py`
 
 ## Note
 
@@ -302,3 +325,4 @@ REST_FRAMEWORK_THROTTING_WHITELIST = []
 ```bash
 ./seahub.sh restart
 ```
+
